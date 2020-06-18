@@ -19,6 +19,7 @@ const BluetoothStateManager = {
   disable: () => RNBluetoothStateManager.disable(),
   requestToEnable: () => RNBluetoothStateManager.requestToEnable(),
   openSettings: () => RNBluetoothStateManager.openSettings(),
+  initBLEStateManager: () => RNBluetoothStateManager.initBLEStateManager()
 };
 
 export default BluetoothStateManager;
