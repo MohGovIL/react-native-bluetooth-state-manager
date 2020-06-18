@@ -7,6 +7,13 @@
   bool hasListeners;
 }
 
+-(instancetype)initSDK {
+    self = [super init];
+    cb = [[CBCentralManager alloc] initWithDelegate:nil queue:nil options:@{CBCentralManagerOptionShowPowerAlertKey: @NO}];
+    [cb setDelegate:self];
+    return self;
+}
+
 // Override
 -(void)startObserving {
   hasListeners = YES;
@@ -26,16 +33,8 @@
 {
   return dispatch_get_main_queue();
 }
-RCT_EXPORT_MODULE()
 
--(instancetype)init{
-  self = [super init];
-  if(self){
-    cb = [[CBCentralManager alloc] initWithDelegate:nil queue:nil options:@{CBCentralManagerOptionShowPowerAlertKey: @NO}];
-    [cb setDelegate:self];
-  }
-  return self;
-}
+RCT_EXPORT_MODULE()
 
 NSString *const EVENT_BLUETOOTH_STATE_CHANGE = @"EVENT_BLUETOOTH_STATE_CHANGE";
 
@@ -49,6 +48,11 @@ NSString *const EVENT_BLUETOOTH_STATE_CHANGE = @"EVENT_BLUETOOTH_STATE_CHANGE";
 
 // ----------------------------------------------------------------------------------------------- -
 // BLUETOOTH STATE
+
+RCT_EXPORT_METHOD(initBLEStateManager:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
+    [self initSDK];
+    resolve(nil);
+}
 
 RCT_EXPORT_METHOD(getState:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
   NSString *stateName = [self bluetoothStateToString:cb.state];
