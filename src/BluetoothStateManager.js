@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import RNBluetoothStateManager, { EventEmitter } from './RNBluetoothStateManager';
 
 const BluetoothStateManager = {
@@ -19,7 +20,7 @@ const BluetoothStateManager = {
   disable: () => RNBluetoothStateManager.disable(),
   requestToEnable: () => RNBluetoothStateManager.requestToEnable(),
   openSettings: () => RNBluetoothStateManager.openSettings(),
-  initBLEStateManager: () => RNBluetoothStateManager.initBLEStateManager()
+  initBLEStateManager: Platform.select({ ios: () => RNBluetoothStateManager.initBLEStateManager(), android: () => {}})
 };
 
 export default BluetoothStateManager;
